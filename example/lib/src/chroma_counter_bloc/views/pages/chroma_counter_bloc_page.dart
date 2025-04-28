@@ -16,46 +16,51 @@ class ChromaCounterBlocPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocProvider(
       create: (final _) => ChromaCounterBloc(),
-      child: Builder(
-        builder: (final context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Chroma Counter'),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 32,
-                children: [
-                  const _SelectedCount(),
-                  const ChromaCounter(),
-                  ElevatedButton(
-                    onPressed: () {
-                      unawaited(
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (final bottomSheetContext) => BlocProvider.value(
-                            value: BlocProvider.of<ChromaCounterBloc>(context),
-                            child: const _BottomSheetContent(),
-                          ),
-                          isScrollControlled: true,
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height * 0.9,
-                          ),
-                          useSafeArea: true,
-                        ),
-                      );
-                    },
-                    child: const Text('Reveal'),
-                  ),
-                ],
-              ),
-            ),
-            floatingActionButton: const _Button(),
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          );
-        },
+      child: const _ChromaCounterBlocPage(),
+    );
+  }
+}
+
+class _ChromaCounterBlocPage extends StatelessWidget {
+  const _ChromaCounterBlocPage();
+
+  @override
+  Widget build(final BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Chroma Counter'),
       ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 32,
+          children: [
+            const _SelectedCount(),
+            const ChromaCounter(),
+            ElevatedButton(
+              onPressed: () {
+                unawaited(
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (final bottomSheetContext) => BlocProvider.value(
+                      value: BlocProvider.of<ChromaCounterBloc>(context),
+                      child: const _BottomSheetContent(),
+                    ),
+                    isScrollControlled: true,
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.9,
+                    ),
+                    useSafeArea: true,
+                  ),
+                );
+              },
+              child: const Text('Reveal'),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: const _Button(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
